@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 
+import os
 import sys
+import shutil
 import argparse
 
 
@@ -19,6 +21,11 @@ if __name__ == '__main__':
     print(cmd_args.file_name)
     input_file = open(cmd_args.file_name, "rb")
     parsed = PDFDocument(PDFParser(input_file))
+    try:
+        shutil.rmtree('%s.pdfminer_out' % cmd_args.file_name)
+    except FileNotFoundError:
+        pass
+    os.mkdir('%s.pdfminer_out' % cmd_args.file_name)
     for obj_id in set(obj_id for xref in parsed.xrefs for obj_id in xref.get_objids()):
         try:
             obj = parsed.getobj(obj_id)
@@ -29,6 +36,6 @@ if __name__ == '__main__':
         print('%s' % obj)
         obj.decode()
         length = obj.attrs.get('Length', '')
-        output_file = open('pdf_%04d_1.dat' % obj_id, 'wb')
+        output_file = open('%s.pdfminer_out/pdf_%04d_0.dat' % (cmd_args.file_name, obj_id), 'wb')
         output_file.write(obj.data)
         output_file.close()
