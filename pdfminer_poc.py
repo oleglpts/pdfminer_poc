@@ -4,12 +4,14 @@ import os
 import sys
 import shutil
 import argparse
+from time import time
 
 
 if __name__ == '__main__':
     #
     # Documents: https: // buildmedia.readthedocs.org / media / pdf / pdfminer - docs / latest / pdfminer - docs.pdf
     #
+    tic = time()
     sys.path.append('../')
     from utils import virtual_environment
     parser = argparse.ArgumentParser(prog='pdfminer.poc')
@@ -39,3 +41,5 @@ if __name__ == '__main__':
         output_file = open('%s.pdfminer_out/pdf_%04d_0.dat' % (cmd_args.file_name, obj_id), 'wb')
         output_file.write(obj.data)
         output_file.close()
+    toc = time()
+    print('\nExecution time: %s sec.' % (toc - tic))
