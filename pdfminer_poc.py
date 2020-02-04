@@ -38,7 +38,7 @@ if __name__ == '__main__':
         print('%s' % obj)
         obj.decode()
         length = obj.attrs.get('Length', '')
-        output_file = open('%s.pdfminer_out/pdf_%04d_0.dat' % (cmd_args.file_name, obj_id), 'wb')
+        output_file = open('%s.pdfminer_out/pdf_%07d_0.dat' % (cmd_args.file_name, obj_id), 'wb')
         output_file.write(obj.data)
         output_file.close()
     toc = time()
